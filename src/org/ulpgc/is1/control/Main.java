@@ -36,9 +36,13 @@ public class Main {
         System.out.println("|- Ref.: " + serviceManager.getDeviceServiceList(0,1).get(0).getId());
         System.out.println("|- Descripción: " + serviceManager.getDeviceServiceList(0,1).get(0).getDescription());
         System.out.println("|- Tipo: Repair");
-        System.out.println("|- Información del pago: Pago { fecha del pago= " +
-                serviceManager.getDeviceServiceList(0,1).get(0).getPayment().getDate() +
-                ", cantidad = " + serviceManager.getDeviceServiceList(0,1).get(0).getPayment().getAmount() + " euros }\n");
+        if (serviceManager.getDeviceServiceList(0, 1).get(0).getPayment() == null) {
+            System.out.println("|- Información del pago: No se ha realizado el pago\n");
+        } else {
+            System.out.println("|- Información del pago: Pago { fecha del pago= " +
+                    serviceManager.getDeviceServiceList(0,1).get(0).getPayment().getDate() +
+                    ", cantidad = " + serviceManager.getDeviceServiceList(0,1).get(0).getPayment().getAmount() + " euros }\n");
+        }
 
         System.out.println("*) Datos del dispositivo:");
         System.out.println("|- Serial Number: " + serviceManager.getDevices().get(0).getSerialNumber());
