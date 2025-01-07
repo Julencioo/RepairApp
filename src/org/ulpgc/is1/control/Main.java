@@ -2,8 +2,6 @@ package org.ulpgc.is1.control;
 
 import org.ulpgc.is1.model.*;
 
-import java.util.Arrays;
-
 public class Main {
     public static void main(String[] args) {
         ServiceManager serviceManager = new ServiceManager();
