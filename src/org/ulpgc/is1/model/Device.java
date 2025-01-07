@@ -6,14 +6,15 @@ import java.util.Objects;
 public class Device {
     private String serialNumber;
     private DeviceType deviceType;
-    private ArrayList<Service> deviceServiceList;
+    private ArrayList<Service> serviceList;
     private Customer owner;
 
     public Device(String serialNumber, DeviceType deviceType, Customer owner) {
         this.serialNumber = serialNumber;
         this.deviceType = deviceType;
         this.owner = owner;
-        this.deviceServiceList = new ArrayList<>();
+        this.serviceList = new ArrayList<>();
+        owner.addDevice(this);
     }
 
     public String getSerialNumber() {
@@ -32,12 +33,12 @@ public class Device {
         this.deviceType = deviceType;
     }
 
-    public ArrayList<Service> getDeviceServiceList() {
-        return deviceServiceList;
+    public ArrayList<Service> getServiceList() {
+        return serviceList;
     }
 
-    public void setDeviceServiceList(ArrayList<Service> deviceServiceList) {
-        this.deviceServiceList = deviceServiceList;
+    public void setServiceList(ArrayList<Service> deviceServiceList) {
+        this.serviceList = deviceServiceList;
     }
 
     public Customer getOwner() {
