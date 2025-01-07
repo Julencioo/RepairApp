@@ -46,48 +46,33 @@ public class ServiceManager {
         return devices;
     }
 
-    public void service(int deviceIndex, ServiceType type, String description, int amount, Employee manager) {
-        if (deviceIndex<0 || deviceIndex>=devices.size()) {
+    public void service(int customerIndex, int deviceIndex, ServiceType type, String description, int amount, Employee manager) {
+        if (customerIndex<0 || customerIndex>=customers.size()) {
+            throw new IndexOutOfBoundsException("Customer index out of bounds");
+        }
+        else if (deviceIndex<0 || deviceIndex>=customers.get(customerIndex).getCustomerDeviceList().size()) {
             throw new IndexOutOfBoundsException("Device index out of bounds");
         }
-        Device device = devices.get(deviceIndex);
+        Device device = customers.get(customerIndex).getCustomerDeviceList().get(deviceIndex);
         Service newService = new Service(type, description, amount, manager);
-        device.getDeviceServiceList().add(newService);
+        device.getServiceList().add(newService);
     }
 
-    public void payService(int deviceIndex, int serviceIndex) {
-        if (deviceIndex<0 || deviceIndex>=devices.size()) {
-            throw new IndexOutOfBoundsException("Device index out of bounds");
-        }
-        Device device = devices.get(deviceIndex);
-
-        if (serviceIndex<0 || serviceIndex>=device.getDeviceServiceList().size()) {
-            throw new IndexOutOfBoundsException("Service index out of bounds");
-        }
-
-        Service service = device.getDeviceServiceList().get(serviceIndex);
+    public void payService(Service service) {
         service.pay();
     }
 
-    public ArrayList<Service> getDeviceServiceList (int deviceIndex) {
-        if (deviceIndex<0 || deviceIndex>=devices.size()) {
+    public ArrayList<Service> getDeviceServiceList (int customerIndex, int deviceIndex) {
+        if (customerIndex<0 || customerIndex>=customers.size()) {
+            throw new IndexOutOfBoundsException("Customer index out of bounds");
+        }
+        else if (deviceIndex<0 || deviceIndex>=customers.get(customerIndex).getCustomerDeviceList().size()) {
             throw new IndexOutOfBoundsException("Device index out of bounds");
         }
-        return devices.get(deviceIndex).getDeviceServiceList();
+        return customers.get(customerIndex).getCustomerDeviceList().get(deviceIndex).getServiceList();
     }
 
-    public void addTechnician(int deviceIndex, int serviceIndex, Employee technician, int timeSpent, String description) {
-        if (deviceIndex<0 || deviceIndex>=devices.size()) {
-            throw new IndexOutOfBoundsException("Device index out of bounds");
-        }
-        Device device = devices.get(deviceIndex);
-
-        if (serviceIndex<0 || serviceIndex>=device.getDeviceServiceList().size()) {
-            throw new IndexOutOfBoundsException("Service index out of bounds");
-        }
-
-        Service service = device.getDeviceServiceList().get(serviceIndex);
-
+    public void addTechnician(Service service, Employee technician, int timeSpent, String description) {
         if (!service.getTechnicianList().contains(technician)) {
             service.getTechnicianList().add(technician);
         } else {
@@ -99,15 +84,7 @@ public class ServiceManager {
         technician.getWorkList().add(newWork);
     }
 
-    public ArrayList<Employee> getTechnician(int deviceIndex, int serviceIndex) {
-        if (deviceIndex<0 || deviceIndex>=devices.size()) {
-            throw new IndexOutOfBoundsException("Device index out of bounds");
-        }
-        Device device = devices.get(deviceIndex);
-        if (serviceIndex<0 || serviceIndex>=device.getDeviceServiceList().size()) {
-            throw new IndexOutOfBoundsException("Service index out of bounds");
-        }
-        Service service = device.getDeviceServiceList().get(serviceIndex);
+    public ArrayList<Employee> getTechnician(Service service) {
         return service.getTechnicianList();
     }
 }
